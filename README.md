@@ -16,3 +16,8 @@
 | FormatInt64(data interface{}) (int64, error) | 接口类型转换到int64 |
 | FormatFloat(data interface{}) (float64, error) | 接口类型转换到float64 |
 | FormatString(data interface{}) (string, error) | 接口类型转换成string |
+| FormatMapStringString(data interface{}) (map[string]string, error) | 接口类型转换map[string][string] |
+| FormatMapString(data interface{}) (map[string]interface{}, error) | 接口类型转换map[string]interface{}|
+| FormatArrayString(data interface{}) ([]string, error) | 接口类型转换[]string |
+| FormatArrayInterface(data interface{}) ([]interface{}, error) | 接口类型转换[]interface{} | 
+| FormatArrayMap(data interface{}) ([]map[string]interface{}, error) | 接口类型转换[]map[string]interface{} | 
