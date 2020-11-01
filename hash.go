@@ -5,6 +5,7 @@ import (
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/hex"
 	"hash"
 	"io/ioutil"
@@ -48,6 +49,14 @@ func Sha1File(path string) (string, error) {
 	hash := sha1.New()
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil)), nil
+}
+
+// Sha256
+// 计算字符串的 sha256 散列值
+func Sha1(str string) string {
+	hash := sha256.New()
+	hash.Write([]byte(str))
+	return hex.EncodeToString(hash.Sum256(nil))
 }
 
 // HmacHash
