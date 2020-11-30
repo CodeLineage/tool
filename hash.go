@@ -53,10 +53,10 @@ func Sha1File(path string) (string, error) {
 
 // Sha256
 // 计算字符串的 sha256 散列值
-func Sha1(str string) string {
+func Sha256(str string) string {
 	hash := sha256.New()
 	hash.Write([]byte(str))
-	return hex.EncodeToString(hash.Sum256(nil))
+	return hex.EncodeToString(hash.Sum(nil))
 }
 
 // HmacHash
