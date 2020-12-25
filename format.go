@@ -5,6 +5,7 @@ import (
 	"errors"
 	"reflect"
 	"strconv"
+	"unsafe"
 )
 
 // FormatInt
@@ -152,4 +153,22 @@ func FormatArrayMap(data interface{}) ([]map[string]interface{}, error) {
 	}
 
 	return nil, errors.New("invalid array map type")
+}
+
+// StringToBytes
+// string不被编辑的场景可以使用
+// 谨慎 提升性能同时存在安全隐患
+func StringToBytes(s string) []byte {
+	sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
+	bh := reflect.SliceHeader{
+		Data: sh.Data,
+		Len:  sh.Len,
+		Cap:  sh.Len,
+	}
+	return *(*[]byte)(unsafe.Pointer(&bh))
+}
+
+// BytesToString
+func BytesToString(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }
