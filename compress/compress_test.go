@@ -66,7 +66,6 @@ func TestZlibEncode(t *testing.T) {
 	} else {
 		t.Error(err.Error())
 	}
-
 }
 
 func TestZlibLevelEncode(t *testing.T) {
@@ -81,6 +80,34 @@ func TestZlibLevelEncode(t *testing.T) {
 	t.Log("原数据长度:", len(data))
 	t.Log("压缩数据长度", len(rs))
 	if res, err := ZlibDncode(rs); err == nil {
+		t.Log(string(res))
+	} else {
+		t.Error(err.Error())
+	}
+}
+
+func TestBrotliEncode(t *testing.T) {
+	data := "this is a message"
+	rs := BrotliEncode([]byte(data))
+	t.Log(len(data))
+	t.Log(len(rs))
+	if res, err := BrotliDncode(rs); err == nil {
+		t.Log(string(res))
+	} else {
+		t.Error(err.Error())
+	}
+}
+
+func TestBrotliLevelEncode(t *testing.T) {
+	data := `{
+		"code": 53000,
+		"msg": "error1d233244",
+		"body": {}
+	}`
+	rs := BrotliLevelEncode([]byte(data), 6)
+	t.Log("原数据长度:", len(data))
+	t.Log("压缩数据长度", len(rs))
+	if res, err := BrotliDncode(rs); err == nil {
 		t.Log(string(res))
 	} else {
 		t.Error(err.Error())

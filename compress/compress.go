@@ -6,6 +6,8 @@ import (
 	"compress/gzip"
 	"compress/zlib"
 	"io/ioutil"
+
+	"github.com/andybalholm/brotli"
 )
 
 // FlateEncode
@@ -99,7 +101,7 @@ func ZlibLevelEncode(data []byte, level int) ([]byte, error) {
 	return buffer.Bytes(), nil
 }
 
-// GzipDncode
+// ZlibDncode
 // 解压gzlib压缩数据
 func ZlibDncode(data []byte) ([]byte, error) {
 	content := bytes.NewReader([]byte(data))
@@ -108,4 +110,35 @@ func ZlibDncode(data []byte) ([]byte, error) {
 		return nil, err
 	}
 	return ioutil.ReadAll(zlibReader)
+}
+
+// BrotliEncode
+// Brotli压缩数据
+// @param data 待压缩的数据
+func BrotliEncode(data []byte) []byte {
+	var buffer bytes.Buffer
+	brotliWriter := brotli.NewWriter(&buffer)
+	brotliWriter.Write(data)
+	brotliWriter.Close()
+	return buffer.Bytes()
+}
+
+// BrotliLevelEncode
+// Brotli压缩数据
+// @param data 待压缩的数据
+// @param level 压缩等级
+func BrotliLevelEncode(data []byte, level int) []byte {
+	var buffer bytes.Buffer
+	brotliWriter := brotli.NewWriterLevel(&buffer, level)
+	brotliWriter.Write(data)
+	brotliWriter.Close()
+	return buffer.Bytes()
+}
+
+// BrotliDncode
+// 解压brotli压缩数据
+func BrotliDncode(data []byte) ([]byte, error) {
+	content := bytes.NewReader([]byte(data))
+	brotliReader := brotli.NewReader(content)
+	return ioutil.ReadAll(brotliReader)
 }
